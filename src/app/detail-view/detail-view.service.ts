@@ -1,0 +1,39 @@
+import { Injectable } from '@angular/core';
+import { catchError, map } from 'rxjs/operators';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
+import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
+
+import { MovieReq, MoviesReq } from '../shared/interfaces/movies-req';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DetailViewService {
+  constructor(private http: HttpClient) {}
+
+  handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    return throwError(errorMessage);
+  }
+
+  public getMovies(id: string) {
+    const options = {
+      params: new HttpParams({
+        fromString: `movie_id=${id}&with_images=true&with_cast=true`,
+      }),
+    };
+    return this.http
+      .get<MovieReq>('https://yts.mx/api/v2/movie_details.json', options)
+      .pipe(catchError(this.handleError));
+  }
+}

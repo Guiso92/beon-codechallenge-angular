@@ -1,0 +1,36 @@
+<div class="list-view-container">
+  <app-spinner class="spinner"></app-spinner>
+  <div class="no-data-container" *ngIf="!movieList.length">
+    <h2>Sorry, there's no data to display</h2>
+  </div>
+  <div class="movies-container" *ngIf="!!movieList.length">
+    <li class="movies-list" *ngFor="let movie of movieList; index as i">
+      <div class="card-container">
+        <img
+          class="movie-poster"
+          src="{{ movie.medium_cover_image }}"
+          alt="movie poster"
+        />
+        <div class="movie-info">
+          <p class="movie-title">{{ movie.title }}</p>
+          <p class="movie-year">{{ movie.year }}</p>
+          <p class="movie-rating">
+            Rating: {{ movie.rating }}
+            <fa-icon [icon]="faStar" class="icon-rating"></fa-icon>
+          </p>
+        </div>
+        <div class="see-more">
+          <a class="see-more-button" routerLink="/detail/{{ movie.id }}">
+            Movie Details
+          </a>
+        </div>
+      </div>
+    </li>
+  </div>
+  <div class="show-more-container" *ngIf="!!movieList.length">
+    <button class="show-more-button" (click)="showMore()">
+      Show More Movies
+      <fa-icon [icon]="faVideo" class="icon-see-more"></fa-icon>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="detail-view-container">
+  <app-spinner class="spinner"></app-spinner>
+  <div
+    class="general-container"
+    *ngIf="!!movie"
+    [ngStyle]="{ 'background-image': 'url(' + movie.large_cover_image + ')' }"
+  >
+    <div class="bg-black"></div>
+    <div class="wrapper">
+      <div class="image-container">
+        <img
+          class="movie-poster"
+          src="{{ movie.medium_cover_image }}"
+          alt="movie cover image"
+        />
+      </div>
+      <div class="data-container">
+        <h1>{{ movie.title }}</h1>
+        <h2>
+          {{ movie.year }} -
+          <span class="genre" *ngFor="let genre of movie.genres; index as i">
+            {{ genre }}
+          </span>
+        </h2>
+        <h2 class="overview">Overview</h2>
+        <p class="description">
+          {{ movie.description_full }}
+        </p>
+        <a routerLink="/" class="back-link">Go Back</a>
+      </div>
+    </div>
+  </div>
+</div>
